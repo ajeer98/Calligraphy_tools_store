@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calligraphy Tools Store - Smart Buys</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f5f5f5;
+        }
+
+        /* JioMart Specific Colors */
+        .bg-jio-blue { background-color: #008ecc; }
+        .text-jio-blue { color: #008ecc; }
+        .border-jio-blue { border-color: #008ecc; }
+        .bg-jio-dark-blue { background-color: #0078ad; }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #c1c1c1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #a8a8a8;
+        }
+
+        /* Hide scrollbar for category scroll */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* Product Card Hover Effect */
+        .product-card {
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .product-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen">
+
+    <!-- Navbar -->
+    <header class="sticky top-0 z-50">
+        <!-- Top Blue Bar -->
+        <div class="bg-jio-blue text-white shadow-md">
+            <div class="container mx-auto px-4 py-3 flex items-center justify-between gap-4">
+                
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn" class="lg:hidden text-2xl">
+                    <i class="fas fa-bars"></i>
+                </button>
+
+                <!-- Logo -->
+                <a href="#" class="flex items-center gap-2 flex-shrink-0">
+                    <img src="image/logo.png" alt="Logo" class="w-10 h-10 bg-white rounded-full p-1">
+                    <span class="text-xl font-bold tracking-tight hidden sm:block">Calligraphy Tools Store</span>
+                </a>
+
+                <!-- Right Actions -->
+                <div class="flex items-center gap-6 text-sm font-medium">
+                    <!-- Courier Tracking -->
+                    <a href="https://www.dtdc.com/track-your-shipment/" target="_blank" class="flex items-center gap-2 cursor-pointer hover:bg-white/10 p-2 rounded">
+                        <i class="fas fa-truck"></i>
+                        <span class="hidden lg:inline">Courier Tracking</span>
+                    </a>
+
+                    <!-- Cart -->
+                    <a href="cart.html" class="flex items-center gap-2 cursor-pointer hover:bg-white/10 p-2 rounded relative">
+                        <i class="fas fa-shopping-cart text-xl"></i>
+                        <span id="cart-count" class="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full">0</span>
+                        <span class="hidden lg:inline">Cart</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Secondary Nav (Categories) -->
+        <div class="bg-white shadow-sm border-b border-gray-200 overflow-x-auto no-scrollbar">
+            <div class="container mx-auto px-4">
+                <ul class="flex items-center gap-8 text-sm font-medium text-gray-600 whitespace-nowrap py-3">
+                    <li class="text-jio-blue border-b-2 border-jio-blue pb-3 -mb-3 cursor-pointer" onclick="filterCategory('All', this)">All Tools</li>
+                    <li class="hover:text-jio-blue cursor-pointer" onclick="filterCategory('Calligraphy Kit', this)">Calligraphy Kit</li>
+                    <li class="hover:text-jio-blue cursor-pointer" onclick="filterCategory('Qalam', this)">Qalam</li>
+                    <li class="hover:text-jio-blue cursor-pointer" onclick="filterCategory('Ink', this)">Ink</li>
+                    <li class="hover:text-jio-blue cursor-pointer" onclick="filterCategory('Paper', this)">Paper</li>
+                    <li class="hover:text-jio-blue cursor-pointer" onclick="filterCategory('Ink container', this)">Ink container</li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow container mx-auto px-4 py-6">
+        
+        <div class="flex flex-col lg:flex-row gap-6">
+            
+            <!-- Product Section -->
+            <div class="flex-grow">
+                
+                <!-- Hero Banner for Section -->
+                <div class="bg-gradient-to-r from-blue-100 to-blue-50 rounded-xl p-6 mb-6 flex items-center justify-between shadow-sm border border-blue-200">
+                    <div>
+                        <h1 class="text-2xl md:text-3xl font-bold text-gray-800 mb-2">All Tools</h1>
+                        <p class="text-gray-600 mb-4">Minimum 33% Off on Daily Essentials. Stock up now!</p>
+                        <button class="bg-jio-blue text-white px-6 py-2 rounded-full font-medium hover:bg-blue-700 transition shadow">View All Offers</button>
+                    </div>
+                    <div class="hidden md:block text-6xl text-blue-300 opacity-80 pr-10">
+                        <i class="fas fa-percent"></i>
+                    </div>
+                </div>
+
+                <!-- Product Grid -->
+                <div id="product-grid" class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
+                    <!-- Products will be injected here via JS -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-gray-300 mt-12 text-sm">
+        <div class="container mx-auto px-4 py-10 grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div>
+                <h4 class="text-white font-bold mb-4">Contact Us</h4>
+                <ul class="space-y-2">
+                    <li><a href="#" class="hover:text-white">WhatsApp us: +91 77363 48312</a></li>
+                    <li><a href="#" class="hover:text-white">Call Us: +91 77363 48312</a></li>
+                    <li><a href="#" class="hover:text-white">cs@calligraphytoolsstore.com</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white font-bold mb-4">WhatsApp</h4>
+                <div class="flex gap-2">
+                    <a href="https://wa.me/917736348312" target="_blank" class="flex items-center justify-center w-full max-w-[200px] h-10 bg-green-600 rounded text-white hover:bg-green-700 transition">
+                        <i class="fab fa-whatsapp mr-2 text-lg"></i> Chat on WhatsApp
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="border-t border-gray-700 py-4 bg-gray-900">
+            <div class="container mx-auto px-4 text-center text-xs">
+                © 2025 Calligraphy Tools Store. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Overlay Mobile Menu -->
+    <div id="mobile-menu-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden transition-opacity">
+        <div class="bg-white w-4/5 h-full shadow-lg transform -translate-x-full transition-transform duration-300 flex flex-col" id="mobile-menu-panel">
+            <div class="bg-jio-blue p-4 text-white flex justify-between items-center">
+                <div class="font-bold text-lg"><i class="fas fa-user-circle mr-2"></i> Welcome</div>
+                <button id="close-menu-btn" class="text-xl"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="flex-grow overflow-y-auto p-4 space-y-4">
+                <div>
+                    <h3 class="font-bold text-gray-800 mb-2">Shop by Category</h3>
+                    <ul class="space-y-3 pl-2 text-gray-600">
+                        <li>All Tools</li>
+                        <li>Calligraphy Kit</li>
+                        <li>Qalam</li>
+                        <li>Ink</li>
+                        <li>Paper</li>
+                    </ul>
+                </div>
+                <hr>
+                <div>
+                    <h3 class="font-bold text-gray-800 mb-2">Help & Settings</h3>
+                    <ul class="space-y-3 pl-2 text-gray-600">
+                        <li><a href="https://www.dtdc.com/track-your-shipment/" target="_blank">Courier Tracking</a></li>
+                        <li>Your Account</li>
+                        <li>Customer Service</li>
+                        <li>Sign Out</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Image Zoom Lightbox -->
+    <div id="lightbox-modal" class="fixed inset-0 bg-black bg-opacity-90 z-[60] hidden flex items-center justify-center transition-opacity duration-300" onclick="if(event.target === this) closeLightbox()">
+        <button class="absolute top-5 right-5 text-white text-4xl hover:text-gray-300 focus:outline-none z-50" onclick="closeLightbox()">&times;</button>
+        
+        <button class="absolute left-2 md:left-8 text-white text-4xl hover:text-gray-300 focus:outline-none z-50 p-4" onclick="changeLightboxImage(-1)">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+
+        <img id="lightbox-image" src="" alt="Zoomed Product" class="max-w-[90%] max-h-[90%] object-contain select-none">
+
+        <button class="absolute right-2 md:right-8 text-white text-4xl hover:text-gray-300 focus:outline-none z-50 p-4" onclick="changeLightboxImage(1)">
+            <i class="fas fa-chevron-right"></i>
+        </button>
+        
+        <div id="lightbox-counter" class="absolute bottom-5 text-white bg-black/50 px-3 py-1 rounded-full text-sm font-medium"></div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-10 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white px-6 py-3 rounded-full shadow-lg text-sm font-medium hidden transition-opacity z-50">
+        Item added to cart!
+    </div>
+
+    <!-- Size Selection Modal -->
+    <div id="size-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center">
+        <div class="bg-white rounded-lg p-6 w-11/12 max-w-sm shadow-xl">
+            <h3 class="text-lg font-bold mb-4 text-gray-800">Select Qalam Size (Multiple)</h3>
+            <div class="space-y-3 mb-6">
+                <label class="flex items-center gap-3 cursor-pointer p-2 hover:bg-gray-50 rounded border border-transparent hover:border-gray-200 border-b pb-2">
+                    <input type="checkbox" onclick="toggleSelectAll(this, 'qalam-size')" class="rounded text-jio-blue focus:ring-jio-blue w-4 h-4">
+                    <span class="text-gray-800 font-semibold">Select All</span>
+                </label>
+                <label class="flex items-center gap-3 cursor-pointer p-2 hover:bg-gray-50 rounded border border-transparent hover:border-gray-200">
+                    <input type="checkbox" name="qalam-size" value="2mm" class="rounded text-jio-blue focus:ring-jio-blue w-4 h-4">
+                    <span class="text-gray-700">2mm (Fine)</span>
+                </label>
+                <label class="flex items-center gap-3 cursor-pointer p-2 hover:bg-gray-50 rounded border border-transparent hover:border-gray-200">
+                    <input type="checkbox" name="qalam-size" value="4mm" class="rounded text-jio-blue focus:ring-jio-blue w-4 h-4">
+                    <span class="text-gray-700">4mm (Medium)</span>
+                </label>
+                <label class="flex items-center gap-3 cursor-pointer p-2 hover:bg-gray-50 rounded border border-transparent hover:border-gray-200">
+                    <input type="checkbox" name="qalam-size" value="6mm" class="rounded text-jio-blue focus:ring-jio-blue w-4 h-4">
+                    <span class="text-gray-700">6mm (Bold)</span>
+                </label>
+                <label class="flex items-center gap-3 cursor-pointer p-2 hover:bg-gray-50 rounded border border-transparent hover:border-gray-200">
+                    <input type="checkbox" name="qalam-size" value="Set of 5" class="rounded text-jio-blue focus:ring-jio-blue w-4 h-4">
+                    <span class="text-gray-700">Set of 5 (Mixed)</span>
+                </label>
+            </div>
+            <div class="flex gap-3">
+                <button onclick="closeSizeModal()" class="flex-1 border border-gray-300 py-2 rounded-full text-gray-600 hover:bg-gray-50 font-medium transition">Cancel</button>
+                <button onclick="confirmAddToCart()" class="flex-1 bg-jio-blue text-white py-2 rounded-full hover:bg-blue-600 font-medium transition shadow-md">Add to Cart</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Steel Nib Size Selection Modal -->
+    <div id="steel-nib-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center">
+        <div class="bg-white rounded-lg p-6 w-11/12 max-w-sm shadow-xl">
+            <h3 class="text-lg font-bold mb-4 text-gray-800">Select Nib Size (Multiple)</h3>
+            <div class="space-y-3 mb-6">
+                <label class="flex items-center gap-3 cursor-pointer p-2 hover:bg-gray-50 rounded border border-transparent hover:border-gray-200 border-b pb-2">
+                    <input type="checkbox" onclick="toggleSelectAll(this, 'steel-nib-size')" class="rounded text-jio-blue focus:ring-jio-blue w-4 h-4">
+                    <span class="text-gray-800 font-semibold">Select All</span>
+                </label>
+                <label class="flex items-center gap-3 cursor-pointer p-2 hover:bg-gray-50 rounded border border-transparent hover:border-gray-200">
+                    <input type="checkbox" name="steel-nib-size" value="0.5 mm" class="rounded text-jio-blue focus:ring-jio-blue w-4 h-4">
+                    <span class="text-gray-700">0.5 mm</span>
+                </label>
+                <label class="flex items-center gap-3 cursor-pointer p-2 hover:bg-gray-50 rounded border border-transparent hover:border-gray-200">
+                    <input type="checkbox" name="steel-nib-size" value="0.8 mm" class="rounded text-jio-blue focus:ring-jio-blue w-4 h-4">
+                    <span class="text-gray-700">0.8 mm</span>
+                </label>
+                <label class="flex items-center gap-3 cursor-pointer p-2 hover:bg-gray-50 rounded border border-transparent hover:border-gray-200">
+                    <input type="checkbox" name="steel-nib-size" value="1 mm" class="rounded text-jio-blue focus:ring-jio-blue w-4 h-4">
+                    <span class="text-gray-700">1 mm</span>
+                </label>
+                <label class="flex items-center gap-3 cursor-pointer p-2 hover:bg-gray-50 rounded border border-transparent hover:border-gray-200">
+                    <input type="checkbox" name="steel-nib-size" value="1.5 mm" class="rounded text-jio-blue focus:ring-jio-blue w-4 h-4">
+                    <span class="text-gray-700">1.5 mm</span>
+                </label>
+                <label class="flex items-center gap-3 cursor-pointer p-2 hover:bg-gray-50 rounded border border-transparent hover:border-gray-200">
+                    <input type="checkbox" name="steel-nib-size" value="2 mm" class="rounded text-jio-blue focus:ring-jio-blue w-4 h-4">
+                    <span class="text-gray-700">2 mm</span>
+                </label>
+                <label class="flex items-center gap-3 cursor-pointer p-2 hover:bg-gray-50 rounded border border-transparent hover:border-gray-200">
+                    <input type="checkbox" name="steel-nib-size" value="2.5 mm" class="rounded text-jio-blue focus:ring-jio-blue w-4 h-4">
+                    <span class="text-gray-700">2.5 mm</span>
+                </label>
+            </div>
+            <div class="flex gap-3">
+                <button onclick="closeSteelNibModal()" class="flex-1 border border-gray-300 py-2 rounded-full text-gray-600 hover:bg-gray-50 font-medium transition">Cancel</button>
+                <button onclick="confirmAddSteelNibToCart()" class="flex-1 bg-jio-blue text-white py-2 rounded-full hover:bg-blue-600 font-medium transition shadow-md">Add to Cart</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Kit 1 Contents Modal -->
+    <div id="kit-1-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center">
+        <div class="bg-white rounded-lg p-6 w-11/12 max-w-sm shadow-xl">
+            <h3 class="text-lg font-bold mb-4 text-gray-800">Kit Includes:</h3>
+            <ul class="space-y-3 mb-6 text-gray-600">
+                <li class="flex items-center gap-2"><i class="fas fa-check text-green-500"></i> 2 qalam</li>
+                <li class="flex items-center gap-2"><i class="fas fa-check text-green-500"></i> 1 ink</li>
+                <li class="flex items-center gap-2"><i class="fas fa-check text-green-500"></i> 1 ink container</li>
+                <li class="flex items-center gap-2"><i class="fas fa-check text-green-500"></i> 1 pack thread</li>
+                <li class="flex items-center gap-2"><i class="fas fa-check text-green-500"></i> 15 glossy sheet</li>
+                <li class="flex items-center gap-2"><i class="fas fa-check text-green-500"></i> 1 pack qalam cleaner</li>
+            </ul>
+            <div class="flex gap-3">
+                <button onclick="closeKit1Modal()" class="flex-1 border border-gray-300 py-2 rounded-full text-gray-600 hover:bg-gray-50 font-medium transition">Cancel</button>
+                <button onclick="confirmAddKit1ToCart()" class="flex-1 bg-jio-blue text-white py-2 rounded-full hover:bg-blue-600 font-medium transition shadow-md">Add Kit to Cart</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Kit 2 Contents Modal -->
+    <div id="kit-2-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center">
+        <div class="bg-white rounded-lg p-6 w-11/12 max-w-sm shadow-xl">
+            <h3 class="text-lg font-bold mb-4 text-gray-800">Kit Includes:</h3>
+            <ul class="space-y-3 mb-6 text-gray-600">
+                <li class="flex items-center gap-2"><i class="fas fa-check text-green-500"></i> 3 Qalam</li>
+                <li class="flex items-center gap-2"><i class="fas fa-check text-green-500"></i> 2 ink</li>
+                <li class="flex items-center gap-2"><i class="fas fa-check text-green-500"></i> 2 ink container with silk thread</li>
+                <li class="flex items-center gap-2"><i class="fas fa-check text-green-500"></i> 15 glossy sheet</li>
+                <li class="flex items-center gap-2"><i class="fas fa-check text-green-500"></i> 1 pack qalam cleaner</li>
+            </ul>
+            <div class="flex gap-3">
+                <button onclick="closeKit2Modal()" class="flex-1 border border-gray-300 py-2 rounded-full text-gray-600 hover:bg-gray-50 font-medium transition">Cancel</button>
+                <button onclick="confirmAddKit2ToCart()" class="flex-1 bg-jio-blue text-white py-2 rounded-full hover:bg-blue-600 font-medium transition shadow-md">Add Kit to Cart</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Kit Contents Modal -->
+    <div id="kit-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center">
+        <div class="bg-white rounded-lg p-6 w-11/12 max-w-sm shadow-xl">
+            <h3 class="text-lg font-bold mb-4 text-gray-800">Kit Includes:</h3>
+            <ul class="space-y-3 mb-6 text-gray-600">
+                <li class="flex items-center gap-2"><i class="fas fa-check text-green-500"></i> Bamboo Qalam Set (5 sizes)</li>
+                <li class="flex items-center gap-2"><i class="fas fa-check text-green-500"></i> Black Ink (30ml)</li>
+                <li class="flex items-center gap-2"><i class="fas fa-check text-green-500"></i> Glossy Paper (20 sheets)</li>
+                <li class="flex items-center gap-2"><i class="fas fa-check text-green-500"></i> Likka (Ink soaking fiber)</li>
+                <li class="flex items-center gap-2"><i class="fas fa-check text-green-500"></i> Glass Ink Container</li>
+            </ul>
+            <div class="flex gap-3">
+                <button onclick="closeKitModal()" class="flex-1 border border-gray-300 py-2 rounded-full text-gray-600 hover:bg-gray-50 font-medium transition">Cancel</button>
+                <button onclick="confirmAddKitToCart()" class="flex-1 bg-jio-blue text-white py-2 rounded-full hover:bg-blue-600 font-medium transition shadow-md">Add Kit to Cart</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Kit 3 Contents Modal -->
+    <div id="kit-3-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center">
+        <div class="bg-white rounded-lg p-6 w-11/12 max-w-sm shadow-xl">
+            <h3 class="text-lg font-bold mb-4 text-gray-800">Kit Includes:</h3>
+            <ul class="space-y-3 mb-6 text-gray-600">
+                <li class="flex items-center gap-2"><i class="fas fa-check text-green-500"></i> 3 Qalam</li>
+                <li class="flex items-center gap-2"><i class="fas fa-check text-green-500"></i> 3 ink</li>
+                <li class="flex items-center gap-2"><i class="fas fa-check text-green-500"></i> 3 ink container with silk thread</li>
+                <li class="flex items-center gap-2"><i class="fas fa-check text-green-500"></i> 20 glossy sheet A4</li>
+                <li class="flex items-center gap-2"><i class="fas fa-check text-green-500"></i> 1 pack qalam cleaner</li>
+            </ul>
+            <div class="flex gap-3">
+                <button onclick="closeKit3Modal()" class="flex-1 border border-gray-300 py-2 rounded-full text-gray-600 hover:bg-gray-50 font-medium transition">Cancel</button>
+                <button onclick="confirmAddKit3ToCart()" class="flex-1 bg-jio-blue text-white py-2 rounded-full hover:bg-blue-600 font-medium transition shadow-md">Add Kit to Cart</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Mock Data for "All Tools"
+        const defaultProducts = [
+            {
+                id: 1,
+                title: "Calligraphy Kit 1",
+                tag: "Calligraphy Kit",
+                price: 349,
+                mrp: 400,
+                discount: 33,
+                image: "image/kit1.png",
+                images: ["image/kit1.png", "image/kit1.png", "image/kit1.png"],
+                rating: 4.5
+            },
+            {
+                id: 2,
+                title: "Calligraphy Kit 2",
+                tag: "Calligraphy Kit",
+                price: 449,
+                mrp: 550,
+                discount: 33,
+                image: "image/kit1.png",
+                images: ["image/kit1.png", "image/kit1.png", "image/kit1.png"],
+                rating: 4.5
+            },
+            {
+                id: 3,
+                title: "Calligraphy Kit 3",
+                tag: "Calligraphy Kit",
+                price: 649,
+                mrp: 700,
+                discount: 33,
+                image: "image/kit1.png",
+                images: ["image/kit1.png", "image/kit1.png", "image/kit1.png"],
+                rating: 4.5
+            },
+            {
+                id: 4,
+                title: "Bamboo Qalam",
+                tag: "Qalam",
+                price: 90,
+                mrp: 100,
+                discount: 20,
+                image: "image/Bamboo Qalam.png",
+                images: ["image/Bamboo Qalam.png", "image/Bamboo Qalam.png"],
+                rating: 4.2
+            },
+            {
+                id: 5,
+                title: "Celi Qalam",
+                tag: "Qalam",
+                price: 300,
+                mrp: 350,
+                discount: 20,
+                image: "image/Celi Qalam.png",
+                images: ["image/Celi Qalam.png", "image/Celi Qalam-1.png", "image/celi Qalam-2.png"],
+                rating: 4.2
+            },
+            {
+                id: 6,
+                title: "Javi Qalam",
+                weight: "1 kg",
+                tag: "Qalam",
+                price: 24,
+                mrp: 28,
+                discount: 14,
+                image: "image/Javi Qalam.png",
+                images: ["image/Javi Qalam.png", "image/Javi Qalam.png"],
+                rating: 4.8
+            },
+            {
+                id: 7,
+                title: "Steel Nib Qalam",
+                weight: "5 kg",
+                tag: "Qalam",
+                price: 350,
+                mrp: 450,
+                discount: 25,
+                image: "image/Steel Nib Qalam.png",
+                images: ["image/Steel Nib Qalam.png", "image/Steel Nib Qalam.png"],
+                rating: 4.3
+            },
+            {
+                id: 8,
+                title: "Ink container",
+                weight: "840 g",
+                tag: "Ink container",
+                price: 148,
+                mrp: 168,
+                discount: 12,
+                image: "image/Ink container.png",
+                images: ["image/Ink container.png", "image/Ink container.png"],
+                rating: 4.9
+            },
+            {
+                id: 9,
+                title: "Glossy Sheet",
+                weight: "840 g",
+                tag: "Paper",
+                price: 148,
+                mrp: 168,
+                discount: 12,
+                image: "image/Glossy Sheet.png",
+                images: ["image/Glossy Sheet.png", "image/Glossy Sheet.png"],
+                rating: 4.9
+            },
+            {
+                id: 10,
+                title: "Glossy Sheet",
+                weight: "840 g",
+                tag: "Paper",
+                price: 148,
+                mrp: 168,
+                discount: 12,
+                image: "image/Glossy Sheet.png",
+                images: ["image/Glossy Sheet.png", "image/Glossy Sheet.png"],
+                rating: 4.9
+            },
+            {
+                id: 11,
+                title: "Glossy Sheet",
+                weight: "840 g",
+                tag: "Paper",
+                price: 148,
+                mrp: 168,
+                discount: 12,
+                image: "image/Glossy Sheet.png",
+                images: ["image/Glossy Sheet.png", "image/Glossy Sheet.png"],
+                rating: 4.9
+            },
+            {
+                id: 12,
+                title: "Glossy Sheet",
+                weight: "840 g",
+                tag: "Paper",
+                price: 148,
+                mrp: 168,
+                discount: 12,
+                image: "image/Glossy Sheet.png",
+                images: ["image/Glossy Sheet.png", "image/Glossy Sheet.png"],
+                rating: 4.9
+            }
+        ];
+
+        // Load products from LocalStorage to allow Admin Panel edits
+        let products = JSON.parse(localStorage.getItem('calligraphy_products'));
+        
+        if (!products || products.length === 0) {
+            products = defaultProducts;
+            localStorage.setItem('calligraphy_products', JSON.stringify(products));
+        }
+
+        // State
+        let cartCount = 0;
+        let selectedProductId = null;
+
+        // Render Products
+        const productGrid = document.getElementById('product-grid');
+
+        function renderProducts(filter = 'All') {
+            const displayProducts = filter === 'All' 
+                ? products 
+                : products.filter(p => p.tag === filter || p.title.includes(filter));
+
+            productGrid.innerHTML = displayProducts.map(product => `
+                <div class="product-card bg-white rounded-lg border border-gray-200 overflow-hidden flex flex-col h-full relative">
+                    
+                    <!-- Discount Badge -->
+                    <div class="absolute top-2 left-2 bg-jio-blue text-white text-[10px] font-bold px-2 py-1 rounded-r-md z-10">
+                        ${product.discount}% OFF
+                    </div>
+
+                    <!-- Image -->
+                    <div class="p-4 flex items-center justify-center h-48 bg-white cursor-zoom-in" onclick="openLightbox(${product.id})">
+                        <img src="${product.image}" alt="${product.title}" class="max-h-full max-w-full object-contain hover:scale-105 transition-transform duration-300">
+                    </div>
+
+                    <!-- Content -->
+                    <div class="p-4 flex flex-col flex-grow">
+                        <h3 class="text-sm font-medium text-gray-800 line-clamp-2 mb-1 leading-snug" title="${product.title}">
+                            ${product.title}
+                        </h3>
+                        <p class="text-xs text-blue-600 bg-blue-50 inline-block px-2 py-1 rounded mb-2 font-medium">${product.tag}</p>
+                        
+                        <div class="mt-auto">
+                            <div class="flex items-center gap-2 mb-3">
+                                <span class="text-lg font-bold text-gray-900">₹${product.price}</span>
+                                <span class="text-xs text-gray-400 line-through">₹${product.mrp}</span>
+                                <span class="text-xs text-green-600 font-semibold hidden sm:inline">Save ₹${product.mrp - product.price}</span>
+                            </div>
+                            
+                            <button onclick="addToCart(${product.id}, this)" class="w-full bg-jio-blue text-white py-2 rounded-full font-bold text-sm hover:bg-blue-600 transition flex items-center justify-center gap-2 group">
+                                <span>Add to Cart</span>
+                                <i class="fas fa-plus-circle group-hover:rotate-90 transition-transform"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Filter Category Logic
+        function filterCategory(category, element) {
+            // Update UI classes
+            const siblings = element.parentElement.children;
+            for (let item of siblings) {
+                item.className = "hover:text-jio-blue cursor-pointer";
+            }
+            element.className = "text-jio-blue border-b-2 border-jio-blue pb-3 -mb-3 cursor-pointer";
+            
+            renderProducts(category);
+        }
+
+        // Add to Cart Logic
+        function addToCart(id, btn) {
+            const product = products.find(p => p.id === id);
+            
+            // Check if product is a Qalam
+            if (product.title === 'Steel Nib Qalam') {
+                selectedProductId = id;
+                document.getElementById('steel-nib-modal').classList.remove('hidden');
+            } else if (product.title === 'Calligraphy Kit 1') {
+                selectedProductId = id;
+                document.getElementById('kit-1-modal').classList.remove('hidden');
+            } else if (product.title === 'Calligraphy Kit 2') {
+                selectedProductId = id;
+                document.getElementById('kit-2-modal').classList.remove('hidden');
+            } else if (product.title === 'Calligraphy Kit 3') {
+                selectedProductId = id;
+                document.getElementById('kit-3-modal').classList.remove('hidden');
+            } else if (product.tag === 'Qalam' || product.title.toLowerCase().includes('qalam')) {
+                selectedProductId = id;
+                document.getElementById('size-modal').classList.remove('hidden');
+            } else if (product.tag === 'Calligraphy Kit' || product.title.toLowerCase().includes('kit')) {
+                selectedProductId = id;
+                document.getElementById('kit-modal').classList.remove('hidden');
+            } else {
+                processAddToCart(product);
+            }
+        }
+
+        function closeSizeModal() {
+            document.getElementById('size-modal').classList.add('hidden');
+            selectedProductId = null;
+        }
+
+        function closeKitModal() {
+            document.getElementById('kit-modal').classList.add('hidden');
+            selectedProductId = null;
+        }
+
+        function closeKit1Modal() {
+            document.getElementById('kit-1-modal').classList.add('hidden');
+            selectedProductId = null;
+        }
+
+        function closeKit2Modal() {
+            document.getElementById('kit-2-modal').classList.add('hidden');
+            selectedProductId = null;
+        }
+
+        function closeKit3Modal() {
+            document.getElementById('kit-3-modal').classList.add('hidden');
+            selectedProductId = null;
+        }
+
+        function closeSteelNibModal() {
+            document.getElementById('steel-nib-modal').classList.add('hidden');
+            selectedProductId = null;
+        }
+
+        function confirmAddKitToCart() {
+            if (!selectedProductId) return;
+            const product = products.find(p => p.id === selectedProductId);
+            processAddToCart(product);
+            closeKitModal();
+        }
+
+        function confirmAddKit1ToCart() {
+            if (!selectedProductId) return;
+            const product = products.find(p => p.id === selectedProductId);
+            processAddToCart(product);
+            closeKit1Modal();
+        }
+
+        function confirmAddKit2ToCart() {
+            if (!selectedProductId) return;
+            const product = products.find(p => p.id === selectedProductId);
+            processAddToCart(product);
+            closeKit2Modal();
+        }
+
+        function confirmAddKit3ToCart() {
+            if (!selectedProductId) return;
+            const product = products.find(p => p.id === selectedProductId);
+            processAddToCart(product);
+            closeKit3Modal();
+        }
+
+        function toggleSelectAll(source, name) {
+            const checkboxes = document.getElementsByName(name);
+            for(let i=0; i<checkboxes.length; i++) {
+                checkboxes[i].checked = source.checked;
+            }
+        }
+
+        function confirmAddToCart() {
+            if (!selectedProductId) return;
+            
+            const product = products.find(p => p.id === selectedProductId);
+            const selectedCheckboxes = document.querySelectorAll('input[name="qalam-size"]:checked');
+            
+            if (selectedCheckboxes.length === 0) {
+                alert("Please select at least one size.");
+                return;
+            }
+
+            selectedCheckboxes.forEach((checkbox, index) => {
+                const size = checkbox.value;
+                const productWithSize = {
+                    ...product,
+                    title: `${product.title} - ${size}`,
+                    selectedSize: size
+                };
+                processAddToCart(productWithSize, index === selectedCheckboxes.length - 1);
+            });
+            
+            closeSizeModal();
+        }
+
+        function confirmAddSteelNibToCart() {
+            if (!selectedProductId) return;
+            
+            const product = products.find(p => p.id === selectedProductId);
+            const selectedCheckboxes = document.querySelectorAll('input[name="steel-nib-size"]:checked');
+            
+            if (selectedCheckboxes.length === 0) {
+                alert("Please select at least one size.");
+                return;
+            }
+
+            selectedCheckboxes.forEach((checkbox, index) => {
+                const size = checkbox.value;
+                const productWithSize = {
+                    ...product,
+                    title: `${product.title} - ${size}`,
+                    selectedSize: size
+                };
+                processAddToCart(productWithSize, index === selectedCheckboxes.length - 1);
+            });
+            
+            closeSteelNibModal();
+        }
+
+        function processAddToCart(product, redirect = true) {
+            const qtyVal = 1;
+
+            let cart = JSON.parse(localStorage.getItem('calligraphy_cart')) || [];
+            // Check for existing item by ID and Size (if applicable)
+            const existingItem = cart.find(item => item.id === product.id && item.selectedSize === product.selectedSize);
+            
+            if (existingItem) {
+                existingItem.quantity += qtyVal;
+            } else {
+                cart.push({ ...product, quantity: qtyVal });
+            }
+            
+            localStorage.setItem('calligraphy_cart', JSON.stringify(cart));
+            updateCartCount();
+            
+            if (redirect) {
+                window.location.href = "cart.html";
+            }
+        }
+
+        function updateCartCount() {
+            let cart = JSON.parse(localStorage.getItem('calligraphy_cart')) || [];
+            const count = cart.reduce((acc, item) => acc + item.quantity, 0);
+            document.getElementById('cart-count').innerText = count;
+        }
+
+        // Mobile Menu Logic
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const closeMenuBtn = document.getElementById('close-menu-btn');
+        const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
+        const mobileMenuPanel = document.getElementById('mobile-menu-panel');
+
+        function openMenu() {
+            mobileMenuOverlay.classList.remove('hidden');
+            // Small delay to allow display:block to apply before transform
+            setTimeout(() => {
+                mobileMenuPanel.classList.remove('-translate-x-full');
+            }, 10);
+        }
+
+        function closeMenu() {
+            mobileMenuPanel.classList.add('-translate-x-full');
+            setTimeout(() => {
+                mobileMenuOverlay.classList.add('hidden');
+            }, 300);
+        }
+
+        mobileMenuBtn.addEventListener('click', openMenu);
+        closeMenuBtn.addEventListener('click', closeMenu);
+        mobileMenuOverlay.addEventListener('click', (e) => {
+            if (e.target === mobileMenuOverlay) closeMenu();
+        });
+
+        // Lightbox Functions
+        let currentLightboxProductId = null;
+        let currentLightboxImageIndex = 0;
+
+        function openLightbox(productId) {
+            currentLightboxProductId = productId;
+            currentLightboxImageIndex = 0;
+            updateLightboxImage();
+            document.getElementById('lightbox-modal').classList.remove('hidden');
+        }
+
+        function updateLightboxImage() {
+            const product = products.find(p => p.id === currentLightboxProductId);
+            if (product && product.images && product.images.length > 0) {
+                document.getElementById('lightbox-image').src = product.images[currentLightboxImageIndex];
+                document.getElementById('lightbox-counter').innerText = `${currentLightboxImageIndex + 1} / ${product.images.length}`;
+            }
+        }
+
+        function changeLightboxImage(direction) {
+            const product = products.find(p => p.id === currentLightboxProductId);
+            if (product && product.images) {
+                currentLightboxImageIndex = (currentLightboxImageIndex + direction + product.images.length) % product.images.length;
+                updateLightboxImage();
+            }
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox-modal').classList.add('hidden');
+        }
+
+        // Initialize
+        renderProducts();
+        updateCartCount();
+
+    </script>
+</body>
+</html>

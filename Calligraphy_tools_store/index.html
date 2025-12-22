@@ -519,7 +519,6 @@
 
         // Render Products
         const productGrid = document.getElementById('product-grid');
-
         function renderProducts(filter = 'All') {
             const displayProducts = filter === 'All' 
                 ? products 
@@ -527,11 +526,6 @@
 
             productGrid.innerHTML = displayProducts.map(product => `
                 <div class="product-card bg-white rounded-lg border border-gray-200 overflow-hidden flex flex-col h-full relative">
-                    
-                    <!-- Discount Badge -->
-                    <div class="absolute top-2 left-2 bg-jio-blue text-white text-[10px] font-bold px-2 py-1 rounded-r-md z-10">
-                        ${product.discount}% OFF
-                    </div>
 
                     <!-- Image -->
                     <div class="p-4 flex items-center justify-center h-48 bg-white cursor-zoom-in" onclick="openLightbox(${product.id})">

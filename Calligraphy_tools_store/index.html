@@ -214,154 +214,51 @@
         Item added to cart!
     </div>
 
-    <!-- Size Selection Modal -->
-    <div id="size-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center">
+    <!-- Options (e.g., Size) Selection Modal -->
+    <div id="options-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center">
         <div class="bg-white rounded-lg p-6 w-11/12 max-w-sm shadow-xl">
-            <h3 class="text-lg font-bold mb-4 text-gray-800">Select Qalam Size (Multiple)</h3>
-            <div class="space-y-3 mb-6">
-                <label class="flex items-center gap-3 cursor-pointer p-2 hover:bg-gray-50 rounded border border-transparent hover:border-gray-200 border-b pb-2">
-                    <input type="checkbox" onclick="toggleSelectAll(this, 'qalam-size')" class="rounded text-jio-blue focus:ring-jio-blue w-4 h-4">
-                    <span class="text-gray-800 font-semibold">Select All</span>
-                </label>
-                <label class="flex items-center gap-3 cursor-pointer p-2 hover:bg-gray-50 rounded border border-transparent hover:border-gray-200">
-                    <input type="checkbox" name="qalam-size" value="2mm" class="rounded text-jio-blue focus:ring-jio-blue w-4 h-4">
-                    <span class="text-gray-700">2mm (Fine)</span>
-                </label>
-                <label class="flex items-center gap-3 cursor-pointer p-2 hover:bg-gray-50 rounded border border-transparent hover:border-gray-200">
-                    <input type="checkbox" name="qalam-size" value="4mm" class="rounded text-jio-blue focus:ring-jio-blue w-4 h-4">
-                    <span class="text-gray-700">4mm (Medium)</span>
-                </label>
-                <label class="flex items-center gap-3 cursor-pointer p-2 hover:bg-gray-50 rounded border border-transparent hover:border-gray-200">
-                    <input type="checkbox" name="qalam-size" value="6mm" class="rounded text-jio-blue focus:ring-jio-blue w-4 h-4">
-                    <span class="text-gray-700">6mm (Bold)</span>
-                </label>
-                <label class="flex items-center gap-3 cursor-pointer p-2 hover:bg-gray-50 rounded border border-transparent hover:border-gray-200">
-                    <input type="checkbox" name="qalam-size" value="Set of 5" class="rounded text-jio-blue focus:ring-jio-blue w-4 h-4">
-                    <span class="text-gray-700">Set of 5 (Mixed)</span>
-                </label>
+            <h3 id="options-modal-title" class="text-lg font-bold mb-4 text-gray-800">Select Options</h3>
+            <div id="options-modal-list" class="space-y-3 mb-6">
+                <!-- Options will be injected here by JS -->
             </div>
             <div class="flex gap-3">
-                <button onclick="closeSizeModal()" class="flex-1 border border-gray-300 py-2 rounded-full text-gray-600 hover:bg-gray-50 font-medium transition">Cancel</button>
-                <button onclick="confirmAddToCart()" class="flex-1 bg-jio-blue text-white py-2 rounded-full hover:bg-blue-600 font-medium transition shadow-md">Add to Cart</button>
+                <button onclick="closeOptionsModal()" class="flex-1 border border-gray-300 py-2 rounded-full text-gray-600 hover:bg-gray-50 font-medium transition">Cancel</button>
+                <button onclick="confirmSelectionAndAddToCart()" class="flex-1 bg-jio-blue text-white py-2 rounded-full hover:bg-blue-600 font-medium transition shadow-md">Add to Cart</button>
             </div>
         </div>
     </div>
 
-    <!-- Steel Nib Size Selection Modal -->
-    <div id="steel-nib-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center">
-        <div class="bg-white rounded-lg p-6 w-11/12 max-w-sm shadow-xl">
-            <h3 class="text-lg font-bold mb-4 text-gray-800">Select Nib Size (Multiple)</h3>
-            <div class="space-y-3 mb-6">
-                <label class="flex items-center gap-3 cursor-pointer p-2 hover:bg-gray-50 rounded border border-transparent hover:border-gray-200 border-b pb-2">
-                    <input type="checkbox" onclick="toggleSelectAll(this, 'steel-nib-size')" class="rounded text-jio-blue focus:ring-jio-blue w-4 h-4">
-                    <span class="text-gray-800 font-semibold">Select All</span>
-                </label>
-                <label class="flex items-center gap-3 cursor-pointer p-2 hover:bg-gray-50 rounded border border-transparent hover:border-gray-200">
-                    <input type="checkbox" name="steel-nib-size" value="0.5 mm" class="rounded text-jio-blue focus:ring-jio-blue w-4 h-4">
-                    <span class="text-gray-700">0.5 mm</span>
-                </label>
-                <label class="flex items-center gap-3 cursor-pointer p-2 hover:bg-gray-50 rounded border border-transparent hover:border-gray-200">
-                    <input type="checkbox" name="steel-nib-size" value="0.8 mm" class="rounded text-jio-blue focus:ring-jio-blue w-4 h-4">
-                    <span class="text-gray-700">0.8 mm</span>
-                </label>
-                <label class="flex items-center gap-3 cursor-pointer p-2 hover:bg-gray-50 rounded border border-transparent hover:border-gray-200">
-                    <input type="checkbox" name="steel-nib-size" value="1 mm" class="rounded text-jio-blue focus:ring-jio-blue w-4 h-4">
-                    <span class="text-gray-700">1 mm</span>
-                </label>
-                <label class="flex items-center gap-3 cursor-pointer p-2 hover:bg-gray-50 rounded border border-transparent hover:border-gray-200">
-                    <input type="checkbox" name="steel-nib-size" value="1.5 mm" class="rounded text-jio-blue focus:ring-jio-blue w-4 h-4">
-                    <span class="text-gray-700">1.5 mm</span>
-                </label>
-                <label class="flex items-center gap-3 cursor-pointer p-2 hover:bg-gray-50 rounded border border-transparent hover:border-gray-200">
-                    <input type="checkbox" name="steel-nib-size" value="2 mm" class="rounded text-jio-blue focus:ring-jio-blue w-4 h-4">
-                    <span class="text-gray-700">2 mm</span>
-                </label>
-                <label class="flex items-center gap-3 cursor-pointer p-2 hover:bg-gray-50 rounded border border-transparent hover:border-gray-200">
-                    <input type="checkbox" name="steel-nib-size" value="2.5 mm" class="rounded text-jio-blue focus:ring-jio-blue w-4 h-4">
-                    <span class="text-gray-700">2.5 mm</span>
-                </label>
-            </div>
-            <div class="flex gap-3">
-                <button onclick="closeSteelNibModal()" class="flex-1 border border-gray-300 py-2 rounded-full text-gray-600 hover:bg-gray-50 font-medium transition">Cancel</button>
-                <button onclick="confirmAddSteelNibToCart()" class="flex-1 bg-jio-blue text-white py-2 rounded-full hover:bg-blue-600 font-medium transition shadow-md">Add to Cart</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Kit 1 Contents Modal -->
-    <div id="kit-1-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center">
-        <div class="bg-white rounded-lg p-6 w-11/12 max-w-sm shadow-xl">
-            <h3 class="text-lg font-bold mb-4 text-gray-800">Kit Includes:</h3>
-            <ul class="space-y-3 mb-6 text-gray-600">
-                <li class="flex items-center gap-2"><i class="fas fa-check text-green-500"></i> 2 qalam</li>
-                <li class="flex items-center gap-2"><i class="fas fa-check text-green-500"></i> 1 ink</li>
-                <li class="flex items-center gap-2"><i class="fas fa-check text-green-500"></i> 1 ink container</li>
-                <li class="flex items-center gap-2"><i class="fas fa-check text-green-500"></i> 1 pack thread</li>
-                <li class="flex items-center gap-2"><i class="fas fa-check text-green-500"></i> 15 glossy sheet</li>
-                <li class="flex items-center gap-2"><i class="fas fa-check text-green-500"></i> 1 pack qalam cleaner</li>
-            </ul>
-            <div class="flex gap-3">
-                <button onclick="closeKit1Modal()" class="flex-1 border border-gray-300 py-2 rounded-full text-gray-600 hover:bg-gray-50 font-medium transition">Cancel</button>
-                <button onclick="confirmAddKit1ToCart()" class="flex-1 bg-jio-blue text-white py-2 rounded-full hover:bg-blue-600 font-medium transition shadow-md">Add Kit to Cart</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Kit 2 Contents Modal -->
-    <div id="kit-2-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center">
-        <div class="bg-white rounded-lg p-6 w-11/12 max-w-sm shadow-xl">
-            <h3 class="text-lg font-bold mb-4 text-gray-800">Kit Includes:</h3>
-            <ul class="space-y-3 mb-6 text-gray-600">
-                <li class="flex items-center gap-2"><i class="fas fa-check text-green-500"></i> 3 Qalam</li>
-                <li class="flex items-center gap-2"><i class="fas fa-check text-green-500"></i> 2 ink</li>
-                <li class="flex items-center gap-2"><i class="fas fa-check text-green-500"></i> 2 ink container with silk thread</li>
-                <li class="flex items-center gap-2"><i class="fas fa-check text-green-500"></i> 15 glossy sheet</li>
-                <li class="flex items-center gap-2"><i class="fas fa-check text-green-500"></i> 1 pack qalam cleaner</li>
-            </ul>
-            <div class="flex gap-3">
-                <button onclick="closeKit2Modal()" class="flex-1 border border-gray-300 py-2 rounded-full text-gray-600 hover:bg-gray-50 font-medium transition">Cancel</button>
-                <button onclick="confirmAddKit2ToCart()" class="flex-1 bg-jio-blue text-white py-2 rounded-full hover:bg-blue-600 font-medium transition shadow-md">Add Kit to Cart</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Kit Contents Modal -->
+    <!-- Generic Kit Contents Modal -->
     <div id="kit-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center">
         <div class="bg-white rounded-lg p-6 w-11/12 max-w-sm shadow-xl">
-            <h3 class="text-lg font-bold mb-4 text-gray-800">Kit Includes:</h3>
-            <ul class="space-y-3 mb-6 text-gray-600">
-                <li class="flex items-center gap-2"><i class="fas fa-check text-green-500"></i> Bamboo Qalam Set (5 sizes)</li>
-                <li class="flex items-center gap-2"><i class="fas fa-check text-green-500"></i> Black Ink (30ml)</li>
-                <li class="flex items-center gap-2"><i class="fas fa-check text-green-500"></i> Glossy Paper (20 sheets)</li>
-                <li class="flex items-center gap-2"><i class="fas fa-check text-green-500"></i> Likka (Ink soaking fiber)</li>
-                <li class="flex items-center gap-2"><i class="fas fa-check text-green-500"></i> Glass Ink Container</li>
+            <h3 id="kit-modal-title" class="text-lg font-bold mb-4 text-gray-800">Kit Includes:</h3>
+            <ul id="kit-modal-list" class="space-y-3 mb-6 text-gray-600">
+                <!-- Kit contents will be injected here by JS -->
             </ul>
             <div class="flex gap-3">
                 <button onclick="closeKitModal()" class="flex-1 border border-gray-300 py-2 rounded-full text-gray-600 hover:bg-gray-50 font-medium transition">Cancel</button>
-                <button onclick="confirmAddKitToCart()" class="flex-1 bg-jio-blue text-white py-2 rounded-full hover:bg-blue-600 font-medium transition shadow-md">Add Kit to Cart</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Kit 3 Contents Modal -->
-    <div id="kit-3-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center">
-        <div class="bg-white rounded-lg p-6 w-11/12 max-w-sm shadow-xl">
-            <h3 class="text-lg font-bold mb-4 text-gray-800">Kit Includes:</h3>
-            <ul class="space-y-3 mb-6 text-gray-600">
-                <li class="flex items-center gap-2"><i class="fas fa-check text-green-500"></i> 3 Qalam</li>
-                <li class="flex items-center gap-2"><i class="fas fa-check text-green-500"></i> 3 ink</li>
-                <li class="flex items-center gap-2"><i class="fas fa-check text-green-500"></i> 3 ink container with silk thread</li>
-                <li class="flex items-center gap-2"><i class="fas fa-check text-green-500"></i> 20 glossy sheet A4</li>
-                <li class="flex items-center gap-2"><i class="fas fa-check text-green-500"></i> 1 pack qalam cleaner</li>
-            </ul>
-            <div class="flex gap-3">
-                <button onclick="closeKit3Modal()" class="flex-1 border border-gray-300 py-2 rounded-full text-gray-600 hover:bg-gray-50 font-medium transition">Cancel</button>
-                <button onclick="confirmAddKit3ToCart()" class="flex-1 bg-jio-blue text-white py-2 rounded-full hover:bg-blue-600 font-medium transition shadow-md">Add Kit to Cart</button>
+                <button onclick="confirmKitAddToCart()" class="flex-1 bg-jio-blue text-white py-2 rounded-full hover:bg-blue-600 font-medium transition shadow-md">Add Kit to Cart</button>
             </div>
         </div>
     </div>
 
     <script>
+        // Reusable option sets for products
+        const qalamSizes = [
+            { value: '2mm', text: '2mm (Fine)' },
+            { value: '4mm', text: '4mm (Medium)' },
+            { value: '6mm', text: '6mm (Bold)' },
+            { value: 'Set of 5', text: 'Set of 5 (Mixed)' }
+        ];
+        const steelNibSizes = [
+            { value: '0.5 mm', text: '0.5 mm' },
+            { value: '0.8 mm', text: '0.8 mm' },
+            { value: '1 mm', text: '1 mm' },
+            { value: '1.5 mm', text: '1.5 mm' },
+            { value: '2 mm', text: '2 mm' },
+            { value: '2.5 mm', text: '2.5 mm' }
+        ];
+
         // Mock Data for "All Tools"
         const defaultProducts = [
             {
@@ -373,7 +270,13 @@
                 discount: 33,
                 image: "image/kit1.png",
                 images: ["image/kit1.png", "image/kit1.png", "image/kit1.png"],
-                rating: 4.5
+                rating: 4.5,
+                modalType: 'kit',
+                modalData: {
+                    items: [
+                        '2 qalam', '1 ink', '1 ink container', '1 pack thread', '15 glossy sheet', '1 pack qalam cleaner'
+                    ]
+                }
             },
             {
                 id: 2,
@@ -384,7 +287,13 @@
                 discount: 33,
                 image: "image/kit1.png",
                 images: ["image/kit1.png", "image/kit1.png", "image/kit1.png"],
-                rating: 4.5
+                rating: 4.5,
+                modalType: 'kit',
+                modalData: {
+                    items: [
+                        '3 Qalam', '2 ink', '2 ink container with silk thread', '15 glossy sheet', '1 pack qalam cleaner'
+                    ]
+                }
             },
             {
                 id: 3,
@@ -395,7 +304,13 @@
                 discount: 33,
                 image: "image/kit1.png",
                 images: ["image/kit1.png", "image/kit1.png", "image/kit1.png"],
-                rating: 4.5
+                rating: 4.5,
+                modalType: 'kit',
+                modalData: {
+                    items: [
+                        '3 Qalam', '3 ink', '3 ink container with silk thread', '20 glossy sheet A4', '1 pack qalam cleaner'
+                    ]
+                }
             },
             {
                 id: 4,
@@ -406,7 +321,13 @@
                 discount: 20,
                 image: "image/Bamboo Qalam.png",
                 images: ["image/Bamboo Qalam.png", "image/Bamboo Qalam.png"],
-                rating: 4.2
+                rating: 4.2,
+                modalType: 'size',
+                modalData: {
+                    title: 'Select Qalam Size (Multiple)',
+                    name: 'qalam-size',
+                    options: qalamSizes
+                }
             },
             {
                 id: 5,
@@ -417,7 +338,13 @@
                 discount: 20,
                 image: "image/Celi Qalam.png",
                 images: ["image/Celi Qalam.png", "image/Celi Qalam-1.png", "image/celi Qalam-2.png"],
-                rating: 4.2
+                rating: 4.2,
+                modalType: 'size',
+                modalData: {
+                    title: 'Select Qalam Size (Multiple)',
+                    name: 'qalam-size',
+                    options: qalamSizes
+                }
             },
             {
                 id: 6,
@@ -429,7 +356,13 @@
                 discount: 14,
                 image: "image/Javi Qalam.png",
                 images: ["image/Javi Qalam.png", "image/Javi Qalam.png"],
-                rating: 4.8
+                rating: 4.8,
+                modalType: 'size',
+                modalData: {
+                    title: 'Select Qalam Size (Multiple)',
+                    name: 'qalam-size',
+                    options: qalamSizes
+                }
             },
             {
                 id: 7,
@@ -441,7 +374,13 @@
                 discount: 25,
                 image: "image/Steel Nib Qalam.png",
                 images: ["image/Steel Nib Qalam.png", "image/Steel Nib Qalam.png"],
-                rating: 4.3
+                rating: 4.3,
+                modalType: 'size',
+                modalData: {
+                    title: 'Select Nib Size (Multiple)',
+                    name: 'steel-nib-size',
+                    options: steelNibSizes
+                }
             },
             {
                 id: 8,
@@ -571,34 +510,29 @@
         // Add to Cart Logic
         function addToCart(id, btn) {
             const product = products.find(p => p.id === id);
+            if (!product) return;
+
+            selectedProductId = id; // Set global reference to the product being processed
             
-            // Check if product is a Qalam
-            if (product.title === 'Steel Nib Qalam') {
-                selectedProductId = id;
-                document.getElementById('steel-nib-modal').classList.remove('hidden');
-            } else if (product.title === 'Calligraphy Kit 1') {
-                selectedProductId = id;
-                document.getElementById('kit-1-modal').classList.remove('hidden');
-            } else if (product.title === 'Calligraphy Kit 2') {
-                selectedProductId = id;
-                document.getElementById('kit-2-modal').classList.remove('hidden');
-            } else if (product.title === 'Calligraphy Kit 3') {
-                selectedProductId = id;
-                document.getElementById('kit-3-modal').classList.remove('hidden');
-            } else if (product.tag === 'Qalam' || product.title.toLowerCase().includes('qalam')) {
-                selectedProductId = id;
-                document.getElementById('size-modal').classList.remove('hidden');
-            } else if (product.tag === 'Calligraphy Kit' || product.title.toLowerCase().includes('kit')) {
-                selectedProductId = id;
-                document.getElementById('kit-modal').classList.remove('hidden');
+            // Data-driven modal logic
+            if (product.modalType === 'kit') {
+                openKitModal(product);
+            } else if (product.modalType === 'size') {
+                openOptionsModal(product);
             } else {
                 processAddToCart(product);
+                selectedProductId = null; // Clear after use
             }
         }
 
-        function closeSizeModal() {
-            document.getElementById('size-modal').classList.add('hidden');
-            selectedProductId = null;
+        // --- Generic Modal Functions ---
+
+        function openKitModal(product) {
+            const modalList = document.getElementById('kit-modal-list');
+            modalList.innerHTML = product.modalData.items.map(item => `
+                <li class="flex items-center gap-2"><i class="fas fa-check text-green-500"></i> ${item}</li>
+            `).join('');
+            document.getElementById('kit-modal').classList.remove('hidden');
         }
 
         function closeKitModal() {
@@ -606,108 +540,74 @@
             selectedProductId = null;
         }
 
-        function closeKit1Modal() {
-            document.getElementById('kit-1-modal').classList.add('hidden');
-            selectedProductId = null;
-        }
-
-        function closeKit2Modal() {
-            document.getElementById('kit-2-modal').classList.add('hidden');
-            selectedProductId = null;
-        }
-
-        function closeKit3Modal() {
-            document.getElementById('kit-3-modal').classList.add('hidden');
-            selectedProductId = null;
-        }
-
-        function closeSteelNibModal() {
-            document.getElementById('steel-nib-modal').classList.add('hidden');
-            selectedProductId = null;
-        }
-
-        function confirmAddKitToCart() {
+        function confirmKitAddToCart() {
             if (!selectedProductId) return;
             const product = products.find(p => p.id === selectedProductId);
             processAddToCart(product);
             closeKitModal();
         }
 
-        function confirmAddKit1ToCart() {
-            if (!selectedProductId) return;
-            const product = products.find(p => p.id === selectedProductId);
-            processAddToCart(product);
-            closeKit1Modal();
+        function openOptionsModal(product) {
+            const { title, name, options } = product.modalData;
+            document.getElementById('options-modal-title').innerText = title;
+            const modalList = document.getElementById('options-modal-list');
+            
+            const optionsHTML = options.map(opt => `
+                <label class="flex items-center gap-3 cursor-pointer p-2 hover:bg-gray-50 rounded border border-transparent hover:border-gray-200">
+                    <input type="checkbox" name="${name}" value="${opt.value}" class="rounded text-jio-blue focus:ring-jio-blue w-4 h-4">
+                    <span class="text-gray-700">${opt.text}</span>
+                </label>
+            `).join('');
+
+            modalList.innerHTML = `
+                <label class="flex items-center gap-3 cursor-pointer p-2 hover:bg-gray-50 rounded border border-transparent hover:border-gray-200 border-b pb-2">
+                    <input type="checkbox" onclick="toggleSelectAll(this, '${name}')" class="rounded text-jio-blue focus:ring-jio-blue w-4 h-4">
+                    <span class="text-gray-800 font-semibold">Select All</span>
+                </label>
+                ${optionsHTML}
+            `;
+
+            document.getElementById('options-modal').classList.remove('hidden');
         }
 
-        function confirmAddKit2ToCart() {
-            if (!selectedProductId) return;
-            const product = products.find(p => p.id === selectedProductId);
-            processAddToCart(product);
-            closeKit2Modal();
+        function closeOptionsModal() {
+            document.getElementById('options-modal').classList.add('hidden');
+            selectedProductId = null;
         }
 
-        function confirmAddKit3ToCart() {
+        function confirmSelectionAndAddToCart() {
             if (!selectedProductId) return;
+            
             const product = products.find(p => p.id === selectedProductId);
-            processAddToCart(product);
-            closeKit3Modal();
+            const optionGroupName = product.modalData.name;
+            const selectedCheckboxes = document.querySelectorAll(`input[name="${optionGroupName}"]:checked`);
+            
+            if (selectedCheckboxes.length === 0) {
+                alert("Please select at least one option.");
+                return;
+            }
+
+            selectedCheckboxes.forEach((checkbox, index) => {
+                const size = checkbox.value;
+                const productWithOption = {
+                    ...product,
+                    title: `${product.title} - ${size}`,
+                    selectedSize: size // Use a consistent property for cart logic
+                };
+                // Only redirect on the very last item added
+                const shouldRedirect = (index === selectedCheckboxes.length - 1);
+                processAddToCart(productWithOption, shouldRedirect);
+            });
+            
+            closeOptionsModal();
         }
 
         function toggleSelectAll(source, name) {
             const checkboxes = document.getElementsByName(name);
-            for(let i=0; i<checkboxes.length; i++) {
-                checkboxes[i].checked = source.checked;
-            }
+            checkboxes.forEach(checkbox => checkbox.checked = source.checked);
         }
 
-        function confirmAddToCart() {
-            if (!selectedProductId) return;
-            
-            const product = products.find(p => p.id === selectedProductId);
-            const selectedCheckboxes = document.querySelectorAll('input[name="qalam-size"]:checked');
-            
-            if (selectedCheckboxes.length === 0) {
-                alert("Please select at least one size.");
-                return;
-            }
-
-            selectedCheckboxes.forEach((checkbox, index) => {
-                const size = checkbox.value;
-                const productWithSize = {
-                    ...product,
-                    title: `${product.title} - ${size}`,
-                    selectedSize: size
-                };
-                processAddToCart(productWithSize, index === selectedCheckboxes.length - 1);
-            });
-            
-            closeSizeModal();
-        }
-
-        function confirmAddSteelNibToCart() {
-            if (!selectedProductId) return;
-            
-            const product = products.find(p => p.id === selectedProductId);
-            const selectedCheckboxes = document.querySelectorAll('input[name="steel-nib-size"]:checked');
-            
-            if (selectedCheckboxes.length === 0) {
-                alert("Please select at least one size.");
-                return;
-            }
-
-            selectedCheckboxes.forEach((checkbox, index) => {
-                const size = checkbox.value;
-                const productWithSize = {
-                    ...product,
-                    title: `${product.title} - ${size}`,
-                    selectedSize: size
-                };
-                processAddToCart(productWithSize, index === selectedCheckboxes.length - 1);
-            });
-            
-            closeSteelNibModal();
-        }
+        // --- Core Cart & UI Functions (largely unchanged) ---
 
         function processAddToCart(product, redirect = true) {
             const qtyVal = 1;

@@ -94,12 +94,12 @@
         <div class="bg-white shadow-sm border-b border-gray-200 overflow-x-auto no-scrollbar">
             <div class="container mx-auto px-4">
                 <ul class="flex items-center gap-8 text-sm font-medium text-gray-600 whitespace-nowrap py-3">
-                    <li class="text-jio-blue border-b-2 border-jio-blue pb-3 -mb-3 cursor-pointer" onclick="filterCategory('All', this)">All Tools</li>
-                    <li class="hover:text-jio-blue cursor-pointer" onclick="filterCategory('Calligraphy Kit', this)">Calligraphy Kit</li>
-                    <li class="hover:text-jio-blue cursor-pointer" onclick="filterCategory('Qalam', this)">Qalam</li>
-                    <li class="hover:text-jio-blue cursor-pointer" onclick="filterCategory('Ink', this)">Ink</li>
-                    <li class="hover:text-jio-blue cursor-pointer" onclick="filterCategory('Paper', this)">Paper</li>
-                    <li class="hover:text-jio-blue cursor-pointer" onclick="filterCategory('Ink container', this)">Ink container</li>
+                    <li id="nav-All" class="text-jio-blue border-b-2 border-jio-blue pb-3 -mb-3 cursor-pointer" onclick="filterCategory('All')">All Tools</li>
+                    <li id="nav-Calligraphy-Kit" class="hover:text-jio-blue cursor-pointer" onclick="filterCategory('Calligraphy Kit')">Calligraphy Kit</li>
+                    <li id="nav-Qalam" class="hover:text-jio-blue cursor-pointer" onclick="filterCategory('Qalam')">Qalam</li>
+                    <li id="nav-Ink" class="hover:text-jio-blue cursor-pointer" onclick="filterCategory('Ink')">Ink</li>
+                    <li id="nav-Paper" class="hover:text-jio-blue cursor-pointer" onclick="filterCategory('Paper')">Paper</li>
+                    <li id="nav-Ink-container" class="hover:text-jio-blue cursor-pointer" onclick="filterCategory('Ink container')">Ink container</li>
                 </ul>
             </div>
         </div>
@@ -116,7 +116,7 @@
                 <!-- Hero Banner for Section -->
                 <div class="bg-gradient-to-r from-blue-100 to-blue-50 rounded-xl p-6 mb-6 flex items-center justify-between shadow-sm border border-blue-200">
                     <div>
-                        <h1 class="text-2xl md:text-3xl font-bold text-gray-800 mb-2">All Tools</h1>
+                        <h1 id="category-title" class="text-2xl md:text-3xl font-bold text-gray-800 mb-2">All Tools</h1>
                         <p class="text-gray-600 mb-4">Minimum 33% Off on Daily Essentials. Stock up now!</p>
                         <button class="bg-jio-blue text-white px-6 py-2 rounded-full font-medium hover:bg-blue-700 transition shadow">View All Offers</button>
                     </div>
@@ -171,11 +171,12 @@
                 <div>
                     <h3 class="font-bold text-gray-800 mb-2">Shop by Category</h3>
                     <ul class="space-y-3 pl-2 text-gray-600">
-                        <li>All Tools</li>
-                        <li>Calligraphy Kit</li>
-                        <li>Qalam</li>
-                        <li>Ink</li>
-                        <li>Paper</li>
+                        <li class="cursor-pointer py-1 hover:text-jio-blue" onclick="filterCategory('All'); closeMenu();">All Tools</li>
+                        <li class="cursor-pointer py-1 hover:text-jio-blue" onclick="filterCategory('Calligraphy Kit'); closeMenu();">Calligraphy Kit</li>
+                        <li class="cursor-pointer py-1 hover:text-jio-blue" onclick="filterCategory('Qalam'); closeMenu();">Qalam</li>
+                        <li class="cursor-pointer py-1 hover:text-jio-blue" onclick="filterCategory('Ink'); closeMenu();">Ink</li>
+                        <li class="cursor-pointer py-1 hover:text-jio-blue" onclick="filterCategory('Paper'); closeMenu();">Paper</li>
+                        <li class="cursor-pointer py-1 hover:text-jio-blue" onclick="filterCategory('Ink container'); closeMenu();">Ink container</li>
                     </ul>
                 </div>
                 <hr>
@@ -211,7 +212,7 @@
 
     <!-- Toast Notification -->
     <div id="toast" class="fixed bottom-10 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white px-6 py-3 rounded-full shadow-lg text-sm font-medium hidden transition-opacity z-50">
-        Item added to cart!
+        <!-- Message injected by JS -->
     </div>
 
     <!-- Options (e.g., Size) Selection Modal -->
@@ -243,222 +244,20 @@
     </div>
 
     <script>
-        // Reusable option sets for products
-        const qalamSizes = [
-            { value: '2mm', text: '2mm (Fine)' },
-            { value: '4mm', text: '4mm (Medium)' },
-            { value: '6mm', text: '6mm (Bold)' },
-            { value: 'Set of 5', text: 'Set of 5 (Mixed)' }
-        ];
-        const steelNibSizes = [
-            { value: '0.5 mm', text: '0.5 mm' },
-            { value: '0.8 mm', text: '0.8 mm' },
-            { value: '1 mm', text: '1 mm' },
-            { value: '1.5 mm', text: '1.5 mm' },
-            { value: '2 mm', text: '2 mm' },
-            { value: '2.5 mm', text: '2.5 mm' }
-        ];
-
-        // Mock Data for "All Tools"
-        const defaultProducts = [
-            {
-                id: 1,
-                title: "Calligraphy Kit 1",
-                tag: "Calligraphy Kit",
-                price: 349,
-                mrp: 400,
-                discount: 33,
-                image: "image/kit1.png",
-                images: ["image/kit1.png", "image/kit1.png", "image/kit1.png"],
-                rating: 4.5,
-                modalType: 'kit',
-                modalData: {
-                    items: [
-                        '2 qalam', '1 ink', '1 ink container', '1 pack thread', '15 glossy sheet', '1 pack qalam cleaner'
-                    ]
-                }
-            },
-            {
-                id: 2,
-                title: "Calligraphy Kit 2",
-                tag: "Calligraphy Kit",
-                price: 449,
-                mrp: 550,
-                discount: 33,
-                image: "image/kit1.png",
-                images: ["image/kit1.png", "image/kit1.png", "image/kit1.png"],
-                rating: 4.5,
-                modalType: 'kit',
-                modalData: {
-                    items: [
-                        '3 Qalam', '2 ink', '2 ink container with silk thread', '15 glossy sheet', '1 pack qalam cleaner'
-                    ]
-                }
-            },
-            {
-                id: 3,
-                title: "Calligraphy Kit 3",
-                tag: "Calligraphy Kit",
-                price: 649,
-                mrp: 700,
-                discount: 33,
-                image: "image/kit1.png",
-                images: ["image/kit1.png", "image/kit1.png", "image/kit1.png"],
-                rating: 4.5,
-                modalType: 'kit',
-                modalData: {
-                    items: [
-                        '3 Qalam', '3 ink', '3 ink container with silk thread', '20 glossy sheet A4', '1 pack qalam cleaner'
-                    ]
-                }
-            },
-            {
-                id: 4,
-                title: "Bamboo Qalam",
-                tag: "Qalam",
-                price: 90,
-                mrp: 100,
-                discount: 20,
-                image: "image/Bamboo Qalam.png",
-                images: ["image/Bamboo Qalam.png", "image/Bamboo Qalam.png"],
-                rating: 4.2,
-                modalType: 'size',
-                modalData: {
-                    title: 'Select Qalam Size (Multiple)',
-                    name: 'qalam-size',
-                    options: qalamSizes
-                }
-            },
-            {
-                id: 5,
-                title: "Celi Qalam",
-                tag: "Qalam",
-                price: 300,
-                mrp: 350,
-                discount: 20,
-                image: "image/Celi Qalam.png",
-                images: ["image/Celi Qalam.png", "image/Celi Qalam-1.png", "image/celi Qalam-2.png"],
-                rating: 4.2,
-                modalType: 'size',
-                modalData: {
-                    title: 'Select Qalam Size (Multiple)',
-                    name: 'qalam-size',
-                    options: qalamSizes
-                }
-            },
-            {
-                id: 6,
-                title: "Javi Qalam",
-                weight: "1 kg",
-                tag: "Qalam",
-                price: 24,
-                mrp: 28,
-                discount: 14,
-                image: "image/Javi Qalam.png",
-                images: ["image/Javi Qalam.png", "image/Javi Qalam.png"],
-                rating: 4.8,
-                modalType: 'size',
-                modalData: {
-                    title: 'Select Qalam Size (Multiple)',
-                    name: 'qalam-size',
-                    options: qalamSizes
-                }
-            },
-            {
-                id: 7,
-                title: "Steel Nib Qalam",
-                weight: "5 kg",
-                tag: "Qalam",
-                price: 350,
-                mrp: 450,
-                discount: 25,
-                image: "image/Steel Nib Qalam.png",
-                images: ["image/Steel Nib Qalam.png", "image/Steel Nib Qalam.png"],
-                rating: 4.3,
-                modalType: 'size',
-                modalData: {
-                    title: 'Select Nib Size (Multiple)',
-                    name: 'steel-nib-size',
-                    options: steelNibSizes
-                }
-            },
-            {
-                id: 8,
-                title: "Ink container",
-                weight: "840 g",
-                tag: "Ink container",
-                price: 148,
-                mrp: 168,
-                discount: 12,
-                image: "image/Ink container.png",
-                images: ["image/Ink container.png", "image/Ink container.png"],
-                rating: 4.9
-            },
-            {
-                id: 9,
-                title: "Glossy Sheet",
-                weight: "840 g",
-                tag: "Paper",
-                price: 148,
-                mrp: 168,
-                discount: 12,
-                image: "image/Glossy Sheet.png",
-                images: ["image/Glossy Sheet.png", "image/Glossy Sheet.png"],
-                rating: 4.9
-            },
-            {
-                id: 10,
-                title: "Glossy Sheet",
-                weight: "840 g",
-                tag: "Paper",
-                price: 148,
-                mrp: 168,
-                discount: 12,
-                image: "image/Glossy Sheet.png",
-                images: ["image/Glossy Sheet.png", "image/Glossy Sheet.png"],
-                rating: 4.9
-            },
-            {
-                id: 11,
-                title: "Glossy Sheet",
-                weight: "840 g",
-                tag: "Paper",
-                price: 148,
-                mrp: 168,
-                discount: 12,
-                image: "image/Glossy Sheet.png",
-                images: ["image/Glossy Sheet.png", "image/Glossy Sheet.png"],
-                rating: 4.9
-            },
-            {
-                id: 12,
-                title: "Glossy Sheet",
-                weight: "840 g",
-                tag: "Paper",
-                price: 148,
-                mrp: 168,
-                discount: 12,
-                image: "image/Glossy Sheet.png",
-                images: ["image/Glossy Sheet.png", "image/Glossy Sheet.png"],
-                rating: 4.9
-            }
-        ];
-
-        // Load products from LocalStorage to allow Admin Panel edits
-        let products = JSON.parse(localStorage.getItem('calligraphy_products'));
-        
-        if (!products || products.length === 0) {
-            products = defaultProducts;
-            localStorage.setItem('calligraphy_products', JSON.stringify(products));
-        }
+        const STORAGE_KEY = 'calligraphy_products';
 
         // State
-        let cartCount = 0;
+        let products = [];
         let selectedProductId = null;
 
         // Render Products
         const productGrid = document.getElementById('product-grid');
         function renderProducts(filter = 'All') {
+            if (products.length === 0) {
+                productGrid.innerHTML = '<p class="col-span-full text-center text-gray-500">Loading products...</p>';
+                return;
+            }
+
             const displayProducts = filter === 'All' 
                 ? products 
                 : products.filter(p => p.tag === filter || p.title.includes(filter));
@@ -496,14 +295,21 @@
         }
 
         // Filter Category Logic
-        function filterCategory(category, element) {
+        function filterCategory(category) {
             // Update UI classes
-            const siblings = element.parentElement.children;
-            for (let item of siblings) {
+            const navContainer = document.querySelector('.bg-white.shadow-sm ul');
+            const navItems = navContainer.children;
+            for (let item of navItems) {
                 item.className = "hover:text-jio-blue cursor-pointer";
             }
-            element.className = "text-jio-blue border-b-2 border-jio-blue pb-3 -mb-3 cursor-pointer";
+
+            const safeCategory = category.replace(' ', '-');
+            const activeItem = document.getElementById(`nav-${safeCategory}`);
+            if (activeItem) {
+                activeItem.className = "text-jio-blue border-b-2 border-jio-blue pb-3 -mb-3 cursor-pointer";
+            }
             
+            document.getElementById('category-title').innerText = category === 'All' ? 'All Tools' : category;
             renderProducts(category);
         }
 
@@ -543,7 +349,7 @@
         function confirmKitAddToCart() {
             if (!selectedProductId) return;
             const product = products.find(p => p.id === selectedProductId);
-            processAddToCart(product);
+            processAddToCart(product, 'Kit added to cart!');
             closeKitModal();
         }
 
@@ -587,18 +393,21 @@
                 return;
             }
 
-            selectedCheckboxes.forEach((checkbox, index) => {
+            selectedCheckboxes.forEach(checkbox => {
                 const size = checkbox.value;
                 const productWithOption = {
                     ...product,
                     title: `${product.title} - ${size}`,
                     selectedSize: size // Use a consistent property for cart logic
                 };
-                // Only redirect on the very last item added
-                const shouldRedirect = (index === selectedCheckboxes.length - 1);
-                processAddToCart(productWithOption, shouldRedirect);
+                // Add to cart without showing toast for each item
+                _addOrUpdateCart(productWithOption);
             });
             
+            updateCartCount();
+            const message = selectedCheckboxes.length > 1 ? `${selectedCheckboxes.length} items added to cart!` : 'Item added to cart!';
+            showToast(message);
+
             closeOptionsModal();
         }
 
@@ -607,14 +416,27 @@
             checkboxes.forEach(checkbox => checkbox.checked = source.checked);
         }
 
-        // --- Core Cart & UI Functions (largely unchanged) ---
+        // Toast notification
+        let toastTimeout;
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.innerText = message;
+            toast.classList.remove('hidden');
+            
+            clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => {
+                toast.classList.add('hidden');
+            }, 3000);
+        }
 
-        function processAddToCart(product, redirect = true) {
+        // --- Core Cart & UI Functions (largely unchanged) ---
+        function _addOrUpdateCart(product) {
             const qtyVal = 1;
 
             let cart = JSON.parse(localStorage.getItem('calligraphy_cart')) || [];
-            // Check for existing item by ID and Size (if applicable)
-            const existingItem = cart.find(item => item.id === product.id && item.selectedSize === product.selectedSize);
+            // Check for existing item by ID and selectedSize.
+            // Treat undefined/null selectedSize as a match for other items without a size.
+            const existingItem = cart.find(item => item.id === product.id && (item.selectedSize || null) === (product.selectedSize || null));
             
             if (existingItem) {
                 existingItem.quantity += qtyVal;
@@ -623,11 +445,12 @@
             }
             
             localStorage.setItem('calligraphy_cart', JSON.stringify(cart));
+        }
+
+        function processAddToCart(product, toastMessage = 'Item added to cart!') {
+            _addOrUpdateCart(product);
             updateCartCount();
-            
-            if (redirect) {
-                window.location.href = "cart.html";
-            }
+            showToast(toastMessage);
         }
 
         function updateCartCount() {
@@ -694,9 +517,30 @@
             document.getElementById('lightbox-modal').classList.add('hidden');
         }
 
+        async function initializeApp() {
+            const storedProducts = JSON.parse(localStorage.getItem(STORAGE_KEY));
+
+            if (storedProducts && storedProducts.length > 0) {
+                products = storedProducts;
+            } else {
+                try {
+                    const response = await fetch('products.json');
+                    const defaultProducts = await response.json();
+                    products = defaultProducts;
+                    localStorage.setItem(STORAGE_KEY, JSON.stringify(products));
+                } catch (error) {
+                    console.error("Failed to load products:", error);
+                    productGrid.innerHTML = '<p class="col-span-full text-center text-red-500">Could not load products. Please try again later.</p>';
+                    return;
+                }
+            }
+
+            renderProducts();
+            updateCartCount();
+        }
+
         // Initialize
-        renderProducts();
-        updateCartCount();
+        initializeApp();
 
     </script>
 </body>
